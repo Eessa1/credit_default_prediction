@@ -8,4 +8,7 @@ pd.set_option('display.width',None)
 
 data = pd.read_csv('cs-training.csv')
 data['RevolvingUtilizationOfUnsecuredLines'] = np.log1p(data["RevolvingUtilizationOfUnsecuredLines"])
-data['RevolvingUtilizationOfUnsecuredLines'] = data['RevolvingUtilizationOfUnsecuredLines'].clip(upper=0.9167)
+data['RevolvingUtilizationOfUnsecuredLines'] = data['RevolvingUtilizationOfUnsecuredLines'].clip(upper=0.9163)
+
+data.at[65695,'age'] = 52
+print(data['age'].describe())
