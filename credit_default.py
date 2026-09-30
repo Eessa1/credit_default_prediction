@@ -7,7 +7,5 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.width',None)
 
 data = pd.read_csv('cs-training.csv')
-log_ruoul = np.log1p(data["RevolvingUtilizationOfUnsecuredLines"])
-plt.hist(log_ruoul,density=True,bins=100)
-
-replaced = data
+data['RevolvingUtilizationOfUnsecuredLines'] = np.log1p(data["RevolvingUtilizationOfUnsecuredLines"])
+data['RevolvingUtilizationOfUnsecuredLines'] = data['RevolvingUtilizationOfUnsecuredLines'].clip(upper=0.9167)
