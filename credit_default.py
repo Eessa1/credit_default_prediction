@@ -17,4 +17,6 @@ data.at[65695,'age'] = 52
 data['DebtRatio'] = np.log1p(data["DebtRatio"])
 data['DebtRatio'] = data['DebtRatio'].clip(upper=0.9163)
 data['NumberOfDependents'].hist(edgecolor= 'white', bins = 100, density=True)
-print(data.corr())
+data['NumberOfDependents'] = imputer.fit_transform(data[['NumberOfDependents']])
+data = data.drop(columns=['Unnamed: 0'])
+print(data.describe())
