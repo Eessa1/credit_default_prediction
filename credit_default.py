@@ -16,5 +16,5 @@ data['MonthlyIncome'] = np.log1p(data["MonthlyIncome"])
 data.at[65695,'age'] = 52
 data['DebtRatio'] = np.log1p(data["DebtRatio"])
 data['DebtRatio'] = data['DebtRatio'].clip(upper=0.9163)
-data['MonthlyIncome'].hist(edgecolor= 'white', bins = 100, density=True)
-print(data.loc[data['MonthlyIncome'] ==0, 'DebtRatio'])
+data['NumberOfDependents'].hist(edgecolor= 'white', bins = 100, density=True)
+print(data.corr())
