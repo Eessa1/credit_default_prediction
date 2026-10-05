@@ -6,6 +6,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import confusion_matrix, accuracy_score,precision_score,recall_score
 
 std_scaler = StandardScaler()
 imputer = SimpleImputer(strategy="median")
@@ -29,5 +30,6 @@ predict_teinputs = test_set.drop('SeriousDlqin2yrs',axis=1)
 predict_telabels = test_set['SeriousDlqin2yrs'].copy()
 scaledtrinputs = std_scaler.fit_transform(predict_trinputs)
 scaledteinputs = std_scaler.transform(predict_teinputs)
-logreg= LogisticRegression().fit(scaledtrinputs,scaledteinputs)
-predict = logreg.predict(predict_teinputs)
+logreg= LogisticRegression().fit(scaledtrinputs,predict_trlabels)
+predict = logreg.predict(scaledteinputs)
+print(confusion_matrix(predict_telabels,predict))
