@@ -4,6 +4,7 @@ import numpy as np
 from sklearn import preprocessing
 from sklearn.impute import SimpleImputer
 from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
 
 imputer = SimpleImputer(strategy="median")
 pd.set_option('display.max_columns', None)
@@ -17,7 +18,11 @@ data['MonthlyIncome'] = np.log1p(data["MonthlyIncome"])
 data.at[65695,'age'] = 52
 data['DebtRatio'] = np.log1p(data["DebtRatio"])
 data['DebtRatio'] = data['DebtRatio'].clip(upper=0.9163)
-data['NumberOfDependents'].hist(edgecolor= 'white', bins = 100, density=True)
 data['NumberOfDependents'] = imputer.fit_transform(data[['NumberOfDependents']])
 data = data.drop(columns=['Unnamed: 0'])
 train_set, test_set = train_test_split(data, test_size=0.2, stratify= data['SeriousDlqin2yrs'],random_state=42)
+predict_trinputs = train_set.drop('SeriousDlqin2yrs',axis=1)
+predict_trlabels = train_set['SeriousDlqin2yrs'].copy()
+predict_teinputs = test_set.drop('SeriousDlqin2yrs',axis=1)
+predict_telabels = test_set['SeriousDlqin2yrs'].copy()
+logreg= LogisticRegression().fit(predict_trinputs,predict_trlabels)
