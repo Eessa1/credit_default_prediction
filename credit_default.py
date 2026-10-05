@@ -5,7 +5,9 @@ from sklearn import preprocessing
 from sklearn.impute import SimpleImputer
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
 
+std_scaler = StandardScaler()
 imputer = SimpleImputer(strategy="median")
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width',None)
@@ -25,4 +27,7 @@ predict_trinputs = train_set.drop('SeriousDlqin2yrs',axis=1)
 predict_trlabels = train_set['SeriousDlqin2yrs'].copy()
 predict_teinputs = test_set.drop('SeriousDlqin2yrs',axis=1)
 predict_telabels = test_set['SeriousDlqin2yrs'].copy()
-logreg= LogisticRegression().fit(predict_trinputs,predict_trlabels)
+scaledtrinputs = std_scaler.fit_transform(predict_trinputs)
+scaledteinputs = std_scaler.transform(predict_teinputs)
+logreg= LogisticRegression().fit(scaledtrinputs,scaledteinputs)
+predict = logreg.predict(predict_teinputs)
