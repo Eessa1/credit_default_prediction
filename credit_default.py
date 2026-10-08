@@ -7,6 +7,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import confusion_matrix, accuracy_score,precision_score,recall_score
+from sklearn.ensemble import RandomForestClassifier
 
 std_scaler = StandardScaler()
 imputer = SimpleImputer(strategy="median")
@@ -31,6 +32,16 @@ predict_telabels = test_set['SeriousDlqin2yrs'].copy()
 scaledtrinputs = std_scaler.fit_transform(predict_trinputs)
 scaledteinputs = std_scaler.transform(predict_teinputs)
 logreg= LogisticRegression(class_weight='balanced').fit(scaledtrinputs,predict_trlabels)
+rfc = RandomForestClassifier(random_state=42).fit(predict_trinputs,predict_trlabels)
+rfcb = rfc = RandomForestClassifier(class_weight='balanced',random_state=42).fit(predict_trinputs,predict_trlabels)
+predict2 = rfc.predict(predict_teinputs)
+predict3= rfcb.predict(predict_teinputs)
 predict = logreg.predict(scaledteinputs)
 print(confusion_matrix(predict_telabels,predict))
 print(accuracy_score(predict_telabels,predict))
+print(confusion_matrix(predict_telabels,predict2))
+print(accuracy_score(predict_telabels,predict2))
+print(recall_score(predict_telabels,predict))
+print(recall_score(predict_telabels,predict2))
+print(precision_score(predict_telabels,predict))
+print(precision_score(predict_telabels,predict2))
