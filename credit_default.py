@@ -40,20 +40,6 @@ rfcb = RandomForestClassifier(class_weight='balanced',random_state=42).fit(predi
 predict2 = rfc.predict(predict_teinputs)
 predict3= rfcb.predict(predict_teinputs)
 predict = logreg.predict(scaledteinputs)
-print(confusion_matrix(predict_telabels,predict)) ## cmatrix log reg 
-print(accuracy_score(predict_telabels,predict)) ## acc log reg
-print(".")
-print(confusion_matrix(predict_telabels,predict2)) ## cmatrix rfc
-print(accuracy_score(predict_telabels,predict2)) ## acc rfc
-print(".")
-print(confusion_matrix(predict_telabels,predict3)) ## cmatrix rfcb
-print(accuracy_score(predict_telabels,predict3)) ## acc rfcb
-print(".")
-print("recall")
-print(recall_score(predict_telabels,predict)) ## recall log reg
-print(recall_score(predict_telabels,predict2)) ## recall rfc
-print(recall_score(predict_telabels,predict3)) ## recall rfcb
-print("precision")
-print(precision_score(predict_telabels,predict)) ## precision log reg
-print(precision_score(predict_telabels,predict2)) ## precision rfc
-print(precision_score(predict_telabels,predict3)) ## precision rfcb
+threshold = 0.75
+probs = rfc.predict_proba(predict_teinputs)
+print(probs[:5])
