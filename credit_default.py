@@ -42,4 +42,8 @@ predict3= rfcb.predict(predict_teinputs)
 predict = logreg.predict(scaledteinputs)
 threshold = 0.75
 probs = rfc.predict_proba(predict_teinputs)
-print(probs[:5])
+default_probs = probs[:,1]
+flagged = (default_probs>0.07).astype(int)
+print(recall_score(predict_telabels,flagged))
+print(precision_score(predict_telabels,flagged))
+print(confusion_matrix(predict_telabels,flagged))
