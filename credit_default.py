@@ -1,12 +1,10 @@
 import pandas as pd
-import matplotlib.pyplot as plt
 import numpy as np
-from sklearn import preprocessing
 from sklearn.impute import SimpleImputer
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import confusion_matrix, accuracy_score,precision_score,recall_score
+from sklearn.metrics import confusion_matrix,precision_score,recall_score
 from sklearn.ensemble import RandomForestClassifier
 
 std_scaler = StandardScaler()
@@ -40,7 +38,6 @@ rfcb = RandomForestClassifier(class_weight='balanced',random_state=42).fit(predi
 predict2 = rfc.predict(predict_teinputs)
 predict3= rfcb.predict(predict_teinputs)
 predict = logreg.predict(scaledteinputs)
-threshold = 0.75
 probs = rfc.predict_proba(predict_teinputs)
 default_probs = probs[:,1]
 flagged = (default_probs>0.07).astype(int)
