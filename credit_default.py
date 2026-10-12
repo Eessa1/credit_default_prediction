@@ -28,7 +28,7 @@ test_labels = test_set['SeriousDlqin2yrs'].copy()
 impute_forestclassifier_pipeline.fit(train_inputs,train_labels)
 testpredict = impute_forestclassifier_pipeline.predict_proba(test_inputs)
 probs = testpredict[:,1]
-accuracy_probs = (probs>0.21).astype(int)
+accuracy_probs = (probs>0.07).astype(int)
 print(confusion_matrix(test_labels,accuracy_probs))
 print(precision_score(test_labels,accuracy_probs))
 print(recall_score(test_labels,accuracy_probs))
