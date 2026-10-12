@@ -25,8 +25,31 @@ train_labels = train_set['SeriousDlqin2yrs'].copy()
 test_inputs = test_set.drop('SeriousDlqin2yrs',axis=1)
 test_labels = test_set['SeriousDlqin2yrs'].copy()
 
-probathreshold_crossval = cross_val_predict(impute_forestclassifier_pipeline,train_inputs,train_labels,cv=5,n_jobs= -1,method= "predict_proba")
-default_probs = probathreshold_crossval[:,1]
-flagged = (default_probs>0.175).astype(int)
-print(confusion_matrix(train_labels,flagged))
-print(recall_score(train_labels,flagged))
+impute_forestclassifier_pipeline.fit(train_inputs,train_labels)
+testpredict = impute_forestclassifier_pipeline.predict_proba(test_inputs)
+probs = testpredict[:,1]
+accuracy_probs = (probs>0.21).astype(int)
+print(confusion_matrix(test_labels,accuracy_probs))
+print(precision_score(test_labels,accuracy_probs))
+print(recall_score(test_labels,accuracy_probs))
+
+##probathreshold_crossval = cross_val_predict(impute_forestclassifier_pipeline,train_inputs,train_labels,cv=5,n_jobs= -1,method= "predict_proba")
+##default_probs = probathreshold_crossval[:,1]
+##thresholds = np.round(np.arange(0.01,0.51,0.01),2)
+##costs = []
+##c= 5
+##for t in thresholds:
+ ##   flagged = (default_probs>t).astype(int)
+ ##   tn,fp,fn,tp= confusion_matrix(train_labels,flagged).ravel()
+##    cost = (c*fn)+fp
+##    costs.append(cost)
+
+##bestmin = np.argmin(costs)
+##print(thresholds[bestmin])
+##print(costs[bestmin])
+##flagcheck= (default_probs>thresholds[bestmin]).astype(int)
+##print(confusion_matrix(train_labels,flagcheck))
+##print(precision_score(train_labels,flagcheck))
+##print(recall_score(train_labels,flagcheck))
+      
+
