@@ -6,7 +6,7 @@ from sklearn.metrics import confusion_matrix,precision_score,recall_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.pipeline import Pipeline
 
-run_sweep = False #true reruns the threshold sweep
+run_sweep = False 
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width',None)
@@ -30,7 +30,7 @@ test_labels = test_set['SeriousDlqin2yrs'].copy()
 impute_forestclassifier_pipeline.fit(train_inputs,train_labels)
 testpredict = impute_forestclassifier_pipeline.predict_proba(test_inputs)
 test_probs = testpredict[:,1]
-test_flags = (test_probs>0.07).astype(int)
+test_flags = (test_probs>0.07).astype(int) #0.21 for c=5, 0.11 for c=10, 0.07 for c = 16
 print(confusion_matrix(test_labels,test_flags))
 print(precision_score(test_labels,test_flags))
 print(recall_score(test_labels,test_flags))
@@ -40,7 +40,7 @@ if run_sweep:
     default_probs = oof_probs[:,1]
     thresholds = np.round(np.arange(0.01,0.51,0.01),2)
     costs = []
-    c= 5
+    c= 16
     for t in thresholds:
         flagged = (default_probs>t).astype(int)
         tn,fp,fn,tp= confusion_matrix(train_labels,flagged).ravel()
